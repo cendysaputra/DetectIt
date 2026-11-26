@@ -23,6 +23,7 @@ def main():
         license_name=args.license, source=args.source, names=args.names, layout=args.layout,
         ratios=config["dataset"]["ratios"], seed=config["seed"],
         sample_sizes=config["dataset"].get("sample_sizes"),
+        previous_manifest=config["dataset"].get("previous_manifest"),
     )
     print(f"Frozen split manifest: {output}")
 

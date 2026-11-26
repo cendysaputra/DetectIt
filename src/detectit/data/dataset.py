@@ -81,7 +81,7 @@ def sample_split(records, size, seed):
 
 
 def prepare(root, output, *, name, dataset_version, license_name, source, names, ratios, seed, layout,
-            sample_sizes=None):
+            sample_sizes=None, previous_manifest=None):
     root = root.resolve()
     if not names or len(set(names)) != len(names) or len(names) < 2:
         raise ValueError("Provide at least two distinct class names in label ID order.")
@@ -130,10 +130,30 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
     duplicate_images = sum(count for count in image_hashes.values() if count > 1)
     if duplicate_images and sample_sizes is None:
         raise ValueError("The source contains byte-identical images. Resolve duplicates before freezing the splits.")
+    if previous_manifest is not None and (sample_sizes is None or layout == "unsplit"):
+        raise ValueError("A previous manifest requires sampling from published splits.")
+    previous = load_manifest(previous_manifest) if previous_manifest is not None else None
+    if previous is not None and previous["names"] != names:
+        raise ValueError("Class names must match the previous manifest.")
     if sample_sizes is not None:
         for split in SPLITS:
             unique = [record for record in splits[split] if image_hashes[record["image_sha256"]] == 1]
-            splits[split] = sample_split(unique, sample_sizes[split], seed)
+            if previous is None:
+                splits[split] = sample_split(unique, sample_sizes[split], seed)
+                continue
+            earlier = previous["splits"][split]
+            earlier_hashes = {record["image_sha256"] for record in earlier}
+            extra = [record for record in unique if record["image_sha256"] not in earlier_hashes]
+            if split == "test":
+                splits[split] = sample_split(extra, sample_sizes[split], seed)
+                continue
+            retained = [record for record in unique if record["image_sha256"] in earlier_hashes]
+            if retained != earlier:
+                raise ValueError(f"The previous {split} records no longer match the dataset.")
+            increase = sample_sizes[split] - len(retained)
+            if increase < 0 or (split == "val" and increase):
+                raise ValueError("Keep the previous validation split and retain all previous training images.")
+            splits[split] = retained + (sample_split(extra, increase, seed) if increase else [])
         print(f"Excluded {duplicate_images} source images with byte-identical copies before sampling.")
     for split, records in splits.items():
         counts = Counter(
@@ -147,13 +167,16 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
         records.sort(key=lambda record: record["image"])
 
     output.parent.mkdir(parents=True, exist_ok=True)
-    write_json(output, {
+    manifest = {
         "root": os.path.relpath(root, output.parent.resolve()),
         "name": name, "version": dataset_version, "license": license_name, "source": source,
         "names": names, "layout": layout, "seed": seed,
         "ratios": ratios if layout == "unsplit" else None, "source_sizes": source_sizes,
         "excluded_duplicate_images": duplicate_images, "splits": splits,
-    })
+    }
+    if previous_manifest is not None:
+        manifest["previous_manifest_sha256"] = sha256(previous_manifest)
+    write_json(output, manifest)
 
 
 def load_manifest(path):

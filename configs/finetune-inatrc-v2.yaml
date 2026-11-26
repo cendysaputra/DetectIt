@@ -1,0 +1,27 @@
+model: YOLO11n v2
+weights: data/checkpoints/inatrc-yolo11n.pt
+imgsz: 416
+confidence: 0.25
+nms_iou: 0.70
+matching_iou: 0.50
+seed: 42
+dataset:
+  manifest: data/inatrc/splits-v2.json
+  previous_manifest: eval/runs/20261126T041035Z-ae81810e/splits.json
+  ratios: [0.70, 0.15, 0.15]
+  sample_sizes: {train: 240, val: 40, test: 120}
+training:
+  epochs: 10
+  batch: 8
+  patience: 4
+  optimizer: AdamW
+  lr0: 0.001
+  lrf: 0.10
+  warmup_epochs: 1.0
+  freeze: 0
+  hsv_h: 0.015
+  hsv_s: 0.5
+  hsv_v: 0.3
+  fliplr: 0.5
+  mosaic: 0.35
+  close_mosaic: 3
