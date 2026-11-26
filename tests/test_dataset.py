@@ -62,3 +62,29 @@ def test_ultralytics_can_modify_staging_without_changing_frozen_data(tmp_path):
     (run / "training-data" / "train" / "images" / "one.jpg").write_bytes(b"repaired")
     assert check_records(manifest, "train")
     assert not (run / "training-data" / "test").exists()
+
+
+def test_followup_retains_prior_validation_and_uses_unseen_test_images(tmp_path):
+    for split_index, split in enumerate(SPLITS):
+        folder = tmp_path / split
+        (folder / "images").mkdir(parents=True)
+        (folder / "labels").mkdir()
+        for index in range(6):
+            Image.new("RGB", (20, 20), (split_index * 90, 10 * index, 0)).save(folder / "images" / f"{index}.png")
+            (folder / "labels" / f"{index}.txt").write_text("0 .5 .5 .4 .4\n1 .2 .2 .2 .2\n")
+
+    settings = dict(name="fixture", dataset_version="1", license_name="MIT", source="fixture",
+                    names=["a", "b"], ratios=[0.70, 0.15, 0.15], seed=42, layout="published")
+    original = tmp_path / "original.json"
+    updated = tmp_path / "updated.json"
+    prepare(tmp_path, original, sample_sizes={"train": 2, "val": 2, "test": 2}, **settings)
+    prepare(tmp_path, updated, sample_sizes={"train": 4, "val": 2, "test": 4}, previous_manifest=original, **settings)
+    first = load_manifest(original)["splits"]
+    second = load_manifest(updated)["splits"]
+
+    def hashes(records):
+        return {record["image_sha256"] for record in records}
+
+    assert first["val"] == second["val"]
+    assert hashes(first["train"]) < hashes(second["train"])
+    assert hashes(first["test"]).isdisjoint(hashes(second["test"]))

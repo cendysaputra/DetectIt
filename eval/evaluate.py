@@ -22,6 +22,11 @@ def main():
         parser.error("Batch, subset and benchmark sizes must be positive. Warmup must be nonnegative.")
 
     config = load_config(args.config)
+    reference = config.get("reference")
+    if reference is not None and (
+        args.split != "test" or reference["dataset"]["manifest"] != config["dataset"]["manifest"]
+    ):
+        parser.error("A reference checkpoint requires the same frozen test manifest.")
     git_start = git_state()
     final_test = args.split == "test" and args.limit is None
     if args.split == "test" and (not final_test or not git_start[1]):
@@ -53,6 +58,12 @@ def main():
             ), redirect_stderr(Tee(sys.stderr, log)):
                 print(f"Evaluating {args.config} into {run}", flush=True)
                 metrics = evaluate(config, args, git_start)
+                if reference is not None:
+                    print("Evaluating frozen reference checkpoint", flush=True)
+                    reference_metrics = evaluate(reference, args, git_start)
+                    metrics["reference"] = reference_metrics
+                    metrics["map_50_95_delta"] = metrics["map_50_95"] - reference_metrics["map_50_95"]
+                    metrics["reportable"] &= reference_metrics["reportable"]
                 write_json(run / "metrics.json", metrics)
                 print(f"Saved {run / 'metrics.json'} (reportable={metrics['reportable']})")
             if record:
