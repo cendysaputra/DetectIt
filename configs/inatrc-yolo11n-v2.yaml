@@ -1,0 +1,33 @@
+model: YOLO11n v2 · InaTRC
+weights: data/checkpoints/inatrc-yolo11n-v2.pt
+imgsz: 416
+confidence: 0.3
+nms_iou: 0.7
+matching_iou: 0.5
+seed: 42
+dataset:
+  name: InaTRC
+  version: 1 (DetectIt v2 comparison subset)
+  license: CC BY 4.0
+  source: https://doi.org/10.17632/kddgphck3b.1
+  manifest: data/inatrc/splits-v2.json
+fixed_test:
+  weights_sha256: e29f24eb36e5694f61bc167df73e497973b63cc8bf4d66570539cc462f982d41
+  manifest_sha256: 539ad3c2f4b2e23b30cbaac8496d2d85bc9efa3271061dbf93a58389bd2bfd88
+reference:
+  model: YOLO11n · InaTRC
+  weights: data/checkpoints/inatrc-yolo11n.pt
+  imgsz: 320
+  confidence: 0.25
+  nms_iou: 0.7
+  matching_iou: 0.5
+  seed: 42
+  dataset:
+    name: InaTRC
+    version: 1 (DetectIt v2 comparison subset)
+    license: CC BY 4.0
+    source: https://doi.org/10.17632/kddgphck3b.1
+    manifest: data/inatrc/splits-v2.json
+  fixed_test:
+    weights_sha256: fae63f7e345c95306ce9b5c7cb5047502cd3e4889bb43769980a0cb0cbde0e70
+    manifest_sha256: 539ad3c2f4b2e23b30cbaac8496d2d85bc9efa3271061dbf93a58389bd2bfd88
