@@ -1,0 +1,16 @@
+model: "YOLO11n v2 \xB7 InaTRC"
+weights: eval/runs/20261126T042619Z-135b89b9/best.pt
+imgsz: 416
+confidence: 0.25
+nms_iou: 0.7
+matching_iou: 0.5
+seed: 42
+dataset:
+  name: InaTRC
+  version: 1 (DetectIt v2 comparison subset)
+  license: CC BY 4.0
+  source: https://doi.org/10.17632/kddgphck3b.1
+  manifest: data/inatrc/splits-v2.json
+fixed_test:
+  weights_sha256: e29f24eb36e5694f61bc167df73e497973b63cc8bf4d66570539cc462f982d41
+  manifest_sha256: 539ad3c2f4b2e23b30cbaac8496d2d85bc9efa3271061dbf93a58389bd2bfd88

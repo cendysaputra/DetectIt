@@ -1,0 +1,151 @@
+{
+  "map_50": 0.37165448436142323,
+  "map_50_95": 0.24188158667404897,
+  "per_class_ap": {
+    "Non-truck": {
+      "ap_50_95": 0.47752831903392673,
+      "ap_50": 0.7691429851703976
+    },
+    "Two-axle truck": {
+      "ap_50_95": 0.41378429557075685,
+      "ap_50": 0.635249297611247
+    },
+    "Three-axle truck": {
+      "ap_50_95": 0.29549004806785695,
+      "ap_50": 0.3942189730419587
+    },
+    "Four-axle truck": {
+      "ap_50_95": 0.01744535998464935,
+      "ap_50": 0.051397368336645544
+    },
+    "Five-plus-axle truck": {
+      "ap_50_95": 0.0051599107130548254,
+      "ap_50": 0.008263797646867157
+    }
+  },
+  "precision": 0.7395736793327155,
+  "recall": 0.600451467268623,
+  "operating_counts": {
+    "tp": 798,
+    "fp": 281,
+    "fn": 531
+  },
+  "latency": {
+    "cpu": {
+      "name": "x86_64",
+      "torch_threads": 2,
+      "batch_size": 1,
+      "images": 25,
+      "warmup": 3,
+      "ms_per_image": 41.95307595999111,
+      "frames_per_second": 23.836154492072477
+    }
+  },
+  "model": "YOLO11n v2 \u00b7 InaTRC",
+  "weights": "inatrc-yolo11n-v2.pt",
+  "weights_sha256": "e29f24eb36e5694f61bc167df73e497973b63cc8bf4d66570539cc462f982d41",
+  "dataset": {
+    "name": "InaTRC",
+    "version": "1 (DetectIt v2 comparison subset)",
+    "license": "CC BY 4.0",
+    "source": "https://doi.org/10.17632/kddgphck3b.1"
+  },
+  "split": "test",
+  "split_sha256": "539ad3c2f4b2e23b30cbaac8496d2d85bc9efa3271061dbf93a58389bd2bfd88",
+  "evaluated_images": 120,
+  "git_revision": "ede65b0fd930097cf9d447f420e5a89961268e8b",
+  "confidence": 0.3,
+  "nms_iou": 0.7,
+  "matching_iou": 0.5,
+  "ap_confidence": 0.001,
+  "ap_nms_iou": 0.7,
+  "ap_matching_iou": [
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "reportable": true,
+  "reference": {
+    "map_50": 0.18195820736470408,
+    "map_50_95": 0.11247577607863857,
+    "per_class_ap": {
+      "Non-truck": {
+        "ap_50_95": 0.2656238881526884,
+        "ap_50": 0.4369471467906967
+      },
+      "Two-axle truck": {
+        "ap_50_95": 0.17844166413255888,
+        "ap_50": 0.3040674373538596
+      },
+      "Three-axle truck": {
+        "ap_50_95": 0.11831332810794555,
+        "ap_50": 0.16877645267896424
+      },
+      "Four-axle truck": {
+        "ap_50_95": 0.0,
+        "ap_50": 0.0
+      },
+      "Five-plus-axle truck": {
+        "ap_50_95": 0.0,
+        "ap_50": 0.0
+      }
+    },
+    "precision": 0.0,
+    "recall": 0.0,
+    "operating_counts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 1329
+    },
+    "latency": {
+      "cpu": {
+        "name": "x86_64",
+        "torch_threads": 2,
+        "batch_size": 1,
+        "images": 25,
+        "warmup": 3,
+        "ms_per_image": 21.95761255999969,
+        "frames_per_second": 45.542291871098314
+      }
+    },
+    "model": "YOLO11n \u00b7 InaTRC",
+    "weights": "inatrc-yolo11n.pt",
+    "weights_sha256": "fae63f7e345c95306ce9b5c7cb5047502cd3e4889bb43769980a0cb0cbde0e70",
+    "dataset": {
+      "name": "InaTRC",
+      "version": "1 (DetectIt v2 comparison subset)",
+      "license": "CC BY 4.0",
+      "source": "https://doi.org/10.17632/kddgphck3b.1"
+    },
+    "split": "test",
+    "split_sha256": "539ad3c2f4b2e23b30cbaac8496d2d85bc9efa3271061dbf93a58389bd2bfd88",
+    "evaluated_images": 120,
+    "git_revision": "ede65b0fd930097cf9d447f420e5a89961268e8b",
+    "confidence": 0.25,
+    "nms_iou": 0.7,
+    "matching_iou": 0.5,
+    "ap_confidence": 0.001,
+    "ap_nms_iou": 0.7,
+    "ap_matching_iou": [
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ],
+    "reportable": true
+  },
+  "map_50_95_delta": 0.1294058105954104
+}

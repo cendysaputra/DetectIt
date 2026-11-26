@@ -215,6 +215,26 @@ possible near-duplicate CCTV frames across the published splits limit
 generalization. InaTRC CPU latency was measured while the COCO run was active.
 [Training metrics](eval/runs/20261126T041035Z-ae81810e/metrics.json) · [Learning curve](eval/runs/20261126T041035Z-ae81810e/learning-curve.csv) · [Frozen splits](eval/runs/20261126T041035Z-ae81810e/splits.json)
 
+### InaTRC v2 comparison
+
+Both checkpoints were scored in one run on the same 120 previously unused
+InaTRC test images. The cohort excludes every image from the original
+40-image test subset. Images remain in their published splits.
+[Paired metrics](eval/runs/20261126T043536Z-7e4226c4/metrics.json) · [Frozen splits](eval/runs/20261126T042619Z-135b89b9/splits.json)
+
+| Checkpoint | Confidence | mAP@0.5 | mAP@0.5:0.95 | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Original YOLO11n | 0.25 | 18.20% | 11.25% | 0.00% | 0.00% |
+| YOLO11n v2 | 0.30 | 37.17% | 24.19% | 73.96% | 60.05% |
+
+The v2 checkpoint improved held-out mAP@0.5:0.95 by
+12.94 percentage points on this paired comparison.
+On the same 40 validation images, mAP@0.5:0.95 rose from
+11.59% to 26.94%. V2 used 240 training images,
+a 416-pixel input, and a confidence threshold selected by micro F1 on
+validation. AP uses the same low-confidence COCO protocol for both checkpoints.
+[Training metrics](eval/runs/20261126T042619Z-135b89b9/metrics.json) · [Learning curve](eval/runs/20261126T042619Z-135b89b9/learning-curve.csv) · [Confidence sweep](eval/runs/20261126T042619Z-135b89b9/confidence-selection.json)
+
 ## Roadmap
 
 1. Pretrained YOLO inference on images, with boxes, labels, and confidence.
