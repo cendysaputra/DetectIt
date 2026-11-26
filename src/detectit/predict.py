@@ -36,7 +36,8 @@ def main():
         "model": config["model"],
         "weights": detector.weights.name,
         "weights_sha256": sha256(detector.weights),
-        "ultralytics": detector.model.ckpt.get("version"),
+        # Exported weights (ONNX, TorchScript) load without a checkpoint dict.
+        "ultralytics": (detector.model.ckpt or {}).get("version"),
         "installed_ultralytics": version("ultralytics"),
         "config": config,
         "image_size": {"width": image.shape[1], "height": image.shape[0]},
