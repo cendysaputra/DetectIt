@@ -88,3 +88,35 @@ def test_followup_retains_prior_validation_and_uses_unseen_test_images(tmp_path)
     assert first["val"] == second["val"]
     assert hashes(first["train"]) < hashes(second["train"])
     assert hashes(first["test"]).isdisjoint(hashes(second["test"]))
+
+
+def test_targeted_sampling_keeps_all_prior_test_images_out(tmp_path):
+    for split_index, split in enumerate(SPLITS):
+        folder = tmp_path / split
+        (folder / "images").mkdir(parents=True)
+        (folder / "labels").mkdir()
+        for index in range(15):
+            stem = f"{index:02}"
+            Image.new("RGB", (20, 20), (split_index * 90, 10 * index, 0)).save(folder / "images" / f"{stem}.png")
+            label = "0 .5 .5 .4 .4\n"
+            if index % 3 == 0:
+                label += "1 .2 .2 .2 .2\n"
+            (folder / "labels" / f"{stem}.txt").write_text(label)
+
+    settings = dict(name="fixture", dataset_version="1", license_name="MIT", source="fixture",
+                    names=["a", "b"], ratios=[0.70, 0.15, 0.15], seed=42, layout="published")
+    first_path, second_path, third_path = [tmp_path / f"v{index}.json" for index in (1, 2, 3)]
+    prepare(tmp_path, first_path, sample_sizes={"train": 2, "val": 2, "test": 2}, **settings)
+    prepare(tmp_path, second_path, sample_sizes={"train": 3, "val": 2, "test": 2},
+            previous_manifest=first_path, **settings)
+    prepare(tmp_path, third_path, sample_sizes={"train": 6, "val": 2, "test": 3},
+            previous_manifest=second_path, additional_test_exclusions=[first_path],
+            extra_train_minimums={1: 2}, **settings)
+    first, second, third = [load_manifest(path)["splits"] for path in (first_path, second_path, third_path)]
+    earlier_test = {row["image_sha256"] for split in (first, second) for row in split["test"]}
+    assert earlier_test.isdisjoint(row["image_sha256"] for row in third["test"])
+    earlier_train = {row["image_sha256"] for row in second["train"]}
+    added = [row for row in third["train"] if row["image_sha256"] not in earlier_train]
+    assert len(added) == 3
+    assert sum(1 in row["classes"] for row in added) >= 2
+    assert first["val"] == third["val"]
