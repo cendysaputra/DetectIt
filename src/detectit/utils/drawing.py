@@ -5,7 +5,7 @@ import cv2
 from detectit.data.boxes import clip_xyxy
 
 
-def draw_detections(image, detections):
+def draw_detections(image, detections, *, show_confidence=True):
     drawn = image.copy()
     height, width = drawn.shape[:2]
     for detection in detections:
@@ -14,7 +14,9 @@ def draw_detections(image, detections):
         )
         color = ((53 * detection.class_id + 64) % 192, 220, 230)
         cv2.rectangle(drawn, (x1, y1), (x2, y2), color, 2)
-        label = f"{detection.label} {detection.confidence:.2f}"
+        label = detection.label
+        if show_confidence:
+            label = f"{label} {detection.confidence:.2f}"
         (text_width, text_height), baseline = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
         top = max(text_height + baseline + 2, y1)
         cv2.rectangle(drawn, (x1, top - text_height - baseline - 2), (x1 + text_width + 4, top), color, -1)

@@ -114,7 +114,14 @@ Candidates, checked when this plan was written:
 - [motocyclehelmet_detection](https://universe.roboflow.com/deteksihelm/motocyclehelmet_detection) on Roboflow Universe, with the labels `pakai-helm` and `tidak-pakai-helm`.
 - [Deteksi Helm Kendaraan Bermotor](https://universe.roboflow.com/abdul-jalil-azis/deteksi-helm-kendaraan-bermotor-pwech), with the labels `pakai helm` and `tanpa helm`.
 
-The download step re-reads the class list from the version it actually fetches. Label names on those pages can change. The other path is to collect and label images for this project (Label Studio, CVAT, or Roboflow's annotator are all sufficient). A few hundred images are enough to show fine-tuning. The write-up will describe that size as a limit of the result.
+The first custom run uses the street-vehicle fallback, InaTRC v1 (CC BY 4.0).
+InaTRC groups non-truck vehicles and distinguishes four truck classes by axle count.
+DetectIt uses a small seeded sample in each published split after dropping all
+byte-identical copies. The split manifest records the source version and file
+hashes. Training stages local copies because Ultralytics can repair source
+JPEGs while building its cache. [InaTRC v1](https://doi.org/10.17632/kddgphck3b.1)
+
+For a helmet export, re-read the class list from the version actually fetched. Label names on those pages can change. The other path is to collect and label images for this project (Label Studio, CVAT, or Roboflow's annotator are all sufficient). A few hundred images are enough to show fine-tuning. The write-up will describe that size as a limit of the result.
 
 Before any training run:
 
@@ -140,7 +147,7 @@ Load one COCO-pretrained Ultralytics nano model and run it.
 - Input size: 640, matching the tables Ultralytics publishes for these weights.
 - Task: draw boxes, labels, and confidences on local images. No training.
 
-The weights download on first use into the Ultralytics cache, outside git. The run record stores the filename, the Ultralytics version, and a hash of the weight file once it is on disk.
+The weights download on first use into `data/checkpoints/`, outside git. The run record stores the filename, the Ultralytics version, and a hash of the weight file once it is on disk.
 
 ### Stage 2 — Fine-tune
 
@@ -154,6 +161,8 @@ Fine-tune the stage 1 checkpoint on the custom training split.
 Overfitting is the expected risk on a few hundred images. The validation curve is part of the saved run. A widening gap between train and validation is reported with the score, not hidden behind the best epoch.
 
 ### Stage 3 — Optional Faster R-CNN baseline
+
+Deferred for this version.
 
 If time allows, compare against torchvision's Faster R-CNN with a ResNet-50 FPN backbone and the COCO-pretrained weights torchvision documents for that model. The weight enum is pinned in `configs/fasterrcnn-coco.yaml` when the stage is built.
 
@@ -340,6 +349,8 @@ A phase is finished when its tasks are done and, where the phase produces a meas
 - [ ] README row sourced from that run's JSON, with the protocol differences stated.
 
 ### Phase 7 — Optional webcam
+
+Browser stills use Streamlit’s camera input. Live streaming is deferred.
 
 - [ ] Browser-camera still frame through the same predict path as an upload.
 - [ ] A live stream only if the still frame is already solid and the extra dependency is worth it.

@@ -39,3 +39,26 @@ def test_manifest_preserves_published_split_and_checks_hashes(tmp_path):
     (tmp_path / row["label"]).write_text("0 .5 .5 .4 .4\n")
     with pytest.raises(ValueError, match="Frozen data changed"):
         check_records(manifest, "val")
+
+
+def test_ultralytics_can_modify_staging_without_changing_frozen_data(tmp_path):
+    from detectit.train.finetune import training_data
+
+    for index, split in enumerate(SPLITS):
+        folder = tmp_path / "source" / split
+        (folder / "images").mkdir(parents=True)
+        (folder / "labels").mkdir()
+        Image.new("RGB", (20, 20), (index * 90, 0, 0)).save(folder / "images" / "one.jpg")
+        (folder / "labels" / "one.txt").write_text("0 .5 .5 .4 .4\n1 .2 .2 .2 .2\n")
+    output = tmp_path / "splits.json"
+    prepare(
+        tmp_path / "source", output, name="fixture", dataset_version="1", license_name="MIT",
+        source="fixture", names=["helmet", "no helmet"], ratios=[0.70, 0.15, 0.15],
+        seed=42, layout="published",
+    )
+    manifest = load_manifest(output)
+    run = tmp_path / "run"
+    training_data(manifest, run)
+    (run / "training-data" / "train" / "images" / "one.jpg").write_bytes(b"repaired")
+    assert check_records(manifest, "train")
+    assert not (run / "training-data" / "test").exists()
