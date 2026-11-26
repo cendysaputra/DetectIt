@@ -11,15 +11,20 @@ from detectit.utils.runs import git_state, is_reportable, sha256, write_json
 
 
 def training_data(manifest, run):
-    paths = {"path": str(run.resolve()), "names": dict(enumerate(manifest["names"]))}
+    staging = (run / "training-data").resolve()
+    paths = {"path": str(staging), "names": dict(enumerate(manifest["names"]))}
     for split in ("train", "val"):
         records = check_records(manifest, split)
-        file = (run / f"{split}.txt").resolve()
-        file.write_text(
-            "\n".join(str(manifest["root"] / record["image"]) for record in records) + "\n",
-            encoding="utf-8",
-        )
-        paths[split] = str(file)
+        paths[split] = f"{split}/images"
+        for record in records:
+            relative_image = Path(record["image"])
+            relative_image = Path(*relative_image.parts[relative_image.parts.index("images") + 1:])
+            image = staging / split / "images" / relative_image
+            label = staging / split / "labels" / relative_image.with_suffix(".txt")
+            for key, destination in (("image", image), ("label", label)):
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                # Ultralytics may repair JPEGs in place while it builds its cache.
+                shutil.copyfile(manifest["root"] / record[key], destination)
     config_path = (run / "dataset.yaml").resolve()
     config_path.write_text(yaml.safe_dump(paths, sort_keys=False), encoding="utf-8")
     return config_path
