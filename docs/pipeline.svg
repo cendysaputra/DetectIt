@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1297" height="156" viewBox="0 0 1297 156" role="img" aria-labelledby="title desc">
+<title id="title">DetectIt pipeline</title>
+<desc id="desc">Image or video is preprocessed and resized, passed through the detector backbone, neck, and head, producing raw boxes that non-maximum suppression filters into boxes, labels, and confidence.</desc>
+<rect x="0" y="0" width="1297" height="156" fill="#ffffff"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" markerWidth="9" markerHeight="9" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#2c3a4a"/>
+</marker>
+</defs>
+<line x1="185" y1="78.0" x2="225" y2="78.0" stroke="#2c3a4a" stroke-width="1.75" marker-end="url(#arrow)"/>
+<line x1="428" y1="78.0" x2="468" y2="78.0" stroke="#2c3a4a" stroke-width="1.75" marker-end="url(#arrow)"/>
+<line x1="671" y1="78.0" x2="711" y2="78.0" stroke="#2c3a4a" stroke-width="1.75" marker-end="url(#arrow)"/>
+<line x1="852" y1="78.0" x2="892" y2="78.0" stroke="#2c3a4a" stroke-width="1.75" marker-end="url(#arrow)"/>
+<line x1="1061" y1="78.0" x2="1101" y2="78.0" stroke="#2c3a4a" stroke-width="1.75" marker-end="url(#arrow)"/>
+<rect x="32" y="36" width="153" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="108.5" y="78.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Image/Video</text>
+<rect x="225" y="36" width="203" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="326.5" y="78.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Preprocess/Resize</text>
+<rect x="468" y="36" width="203" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="569.5" y="66.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Detector backbone</text>
+<text x="569.5" y="90.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">+ neck + head</text>
+<rect x="711" y="36" width="141" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="781.5" y="78.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Raw boxes</text>
+<rect x="892" y="36" width="169" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="976.5" y="66.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Non-Maximum</text>
+<text x="976.5" y="90.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Suppression</text>
+<rect x="1101" y="36" width="164" height="84" rx="6" ry="6" fill="#eef3fb" stroke="#3d4f66" stroke-width="1.5"/>
+<text x="1183.0" y="66.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">Boxes, labels,</text>
+<text x="1183.0" y="90.0" text-anchor="middle" dominant-baseline="middle" fill="#1b1f24" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18">confidence</text>
+</svg>
