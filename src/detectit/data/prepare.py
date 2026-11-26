@@ -24,6 +24,8 @@ def main():
         ratios=config["dataset"]["ratios"], seed=config["seed"],
         sample_sizes=config["dataset"].get("sample_sizes"),
         previous_manifest=config["dataset"].get("previous_manifest"),
+        additional_test_exclusions=config["dataset"].get("additional_test_exclusions", ()),
+        extra_train_minimums=config["dataset"].get("extra_train_minimums"),
     )
     print(f"Frozen split manifest: {output}")
 

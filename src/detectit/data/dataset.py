@@ -80,8 +80,31 @@ def sample_split(records, size, seed):
     return sample + shuffled[:size - len(sample)]
 
 
+def extend_training(records, size, seed, minimums):
+    if not minimums:
+        return sample_split(records, size, seed)
+    rng = random.Random(seed)
+    available = list(records)
+    rng.shuffle(available)
+    selected = []
+    for class_id, minimum in minimums.items():
+        present = sum(class_id in record["classes"] for record in selected)
+        matches = [record for record in available if class_id in record["classes"]]
+        needed = max(0, minimum - present)
+        if needed > len(matches):
+            raise ValueError(f"Not enough additional training images for class {class_id}.")
+        chosen = matches[:needed]
+        selected.extend(chosen)
+        chosen_hashes = {record["image_sha256"] for record in chosen}
+        available = [record for record in available if record["image_sha256"] not in chosen_hashes]
+    remaining = size - len(selected)
+    if not 0 <= remaining <= len(available):
+        raise ValueError("Training sample size cannot accommodate the configured class minimums.")
+    return selected + available[:remaining]
+
+
 def prepare(root, output, *, name, dataset_version, license_name, source, names, ratios, seed, layout,
-            sample_sizes=None, previous_manifest=None):
+            sample_sizes=None, previous_manifest=None, additional_test_exclusions=(), extra_train_minimums=None):
     root = root.resolve()
     if not names or len(set(names)) != len(names) or len(names) < 2:
         raise ValueError("Provide at least two distinct class names in label ID order.")
@@ -133,6 +156,13 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
     if previous_manifest is not None and (sample_sizes is None or layout == "unsplit"):
         raise ValueError("A previous manifest requires sampling from published splits.")
     previous = load_manifest(previous_manifest) if previous_manifest is not None else None
+    if (additional_test_exclusions or extra_train_minimums) and previous is None:
+        raise ValueError("Additional test exclusions and training minimums require a previous manifest.")
+    excluded_test_hashes = {
+        record["image_sha256"]
+        for path in additional_test_exclusions
+        for record in load_manifest(path)["splits"]["test"]
+    }
     if previous is not None and previous["names"] != names:
         raise ValueError("Class names must match the previous manifest.")
     if sample_sizes is not None:
@@ -145,7 +175,8 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
             earlier_hashes = {record["image_sha256"] for record in earlier}
             extra = [record for record in unique if record["image_sha256"] not in earlier_hashes]
             if split == "test":
-                splits[split] = sample_split(extra, sample_sizes[split], seed)
+                unseen = [record for record in extra if record["image_sha256"] not in excluded_test_hashes]
+                splits[split] = sample_split(unseen, sample_sizes[split], seed)
                 continue
             retained = [record for record in unique if record["image_sha256"] in earlier_hashes]
             if retained != earlier:
@@ -153,7 +184,10 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
             increase = sample_sizes[split] - len(retained)
             if increase < 0 or (split == "val" and increase):
                 raise ValueError("Keep the previous validation split and retain all previous training images.")
-            splits[split] = retained + (sample_split(extra, increase, seed) if increase else [])
+            minimums = extra_train_minimums if split == "train" else None
+            if increase or minimums:
+                retained += extend_training(extra, increase, seed, minimums)
+            splits[split] = retained
         print(f"Excluded {duplicate_images} source images with byte-identical copies before sampling.")
     for split, records in splits.items():
         counts = Counter(
@@ -176,6 +210,10 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
     }
     if previous_manifest is not None:
         manifest["previous_manifest_sha256"] = sha256(previous_manifest)
+    if additional_test_exclusions:
+        manifest["additional_test_exclusion_sha256"] = [sha256(path) for path in additional_test_exclusions]
+    if extra_train_minimums:
+        manifest["extra_train_minimums"] = extra_train_minimums
     write_json(output, manifest)
 
 
