@@ -1,0 +1,24 @@
+model: "YOLO11n v3 \xB7 InaTRC"
+weights: eval/runs/20261126T075559Z-945f3e7d/best.pt
+imgsz: 448
+confidence: 0.3
+nms_iou: 0.7
+matching_iou: 0.5
+seed: 42
+dataset:
+  name: InaTRC
+  version: 1 (DetectIt v3 rare-truck subset)
+  license: CC BY 4.0
+  source: https://doi.org/10.17632/kddgphck3b.1
+  manifest: data/inatrc/splits-v3.json
+fixed_test:
+  weights_sha256: 1a151504a250fa8b48630d8c4549b11be21f6e9d741bafdf41e3b5032295d325
+  manifest_sha256: 8a84a738796b309c66768b9fbcb795323d2a23ff5e6d942abe14e472b02ab542
+config_source: data/inatrc/diagnostics/v3-448.yaml
+evaluation:
+  split: val
+  device: cpu
+  batch: 8
+  limit: null
+  benchmark_images: 10
+  warmup: 3

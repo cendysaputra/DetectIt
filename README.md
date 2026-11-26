@@ -235,6 +235,58 @@ a 416-pixel input, and a confidence threshold selected by micro F1 on
 validation. AP uses the same low-confidence COCO protocol for both checkpoints.
 [Training metrics](eval/runs/20261126T042619Z-135b89b9/metrics.json) · [Learning curve](eval/runs/20261126T042619Z-135b89b9/learning-curve.csv) · [Confidence sweep](eval/runs/20261126T042619Z-135b89b9/confidence-selection.json)
 
+### InaTRC v3 evaluation and 90% target
+
+V3 reached **34.63% mAP@0.5:0.95**, 55.37 percentage points below the
+90% target. V2 and v3 were scored on the same 100 previously unused published
+test images. The sample excludes images from both previous tests.
+[Paired test metrics](eval/runs/20261126T080719Z-8c44478b/metrics.json) · [Frozen splits](eval/runs/20261126T075559Z-945f3e7d/splits.json)
+
+| Checkpoint | Confidence | mAP@0.5 | mAP@0.5:0.95 | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| YOLO11n v2 | 0.30 | 36.21% | 24.11% | 74.05% | 58.84% |
+| YOLO11n v3 | 0.30 | 51.18% | 34.63% | 71.16% | 76.98% |
+
+| Vehicle class | V2 AP@0.5:0.95 | V3 AP@0.5:0.95 |
+| --- | ---: | ---: |
+| Non-truck | 47.02% | 56.87% |
+| Two-axle truck | 40.98% | 49.89% |
+| Three-axle truck | 24.67% | 28.06% |
+| Four-axle truck | 0.94% | 9.36% |
+| Five-plus-axle truck | 6.95% | 28.98% |
+
+The prior v2 test recorded 1.74% AP for four-axle trucks and 0.52% for
+trucks with five or more axles. V3 increased the training subset from 240 to
+384 images. The four-axle box count grew from 29 to 95, and the five-plus count
+from 50 to 116. The new test contains 10 four-axle and 21 five-plus ground-truth
+boxes, so a few errors can materially change those class scores.
+[Prior test](eval/runs/20261126T043536Z-7e4226c4/metrics.json) · [V3 training metrics](eval/runs/20261126T075559Z-945f3e7d/metrics.json)
+
+Input size and confidence were selected on the same 40 validation images
+before test evaluation. V3 used 640 pixels at inference. For v2
+on validation, AP on small COCO-area objects rose from 14.0% at 416 pixels
+to 33.2% at 832, while AP on large objects fell from 45.7% to 30.2%.
+The higher input size therefore had a smaller effect on overall mAP.
+[Confidence sweep](eval/runs/20261126T075559Z-945f3e7d/confidence-selection.json)
+
+| Checkpoint | Input (px) | Validation mAP@0.5:0.95 | Evidence |
+| --- | ---: | ---: | --- |
+| v2 | 416 | 26.94% | [Run](eval/runs/20261126T075642Z-14782072/metrics.json) |
+| v2 | 640 | 27.40% | [Run](eval/runs/20261126T075707Z-a72b353d/metrics.json) |
+| v2 | 832 | 29.20% | [Run](eval/runs/20261126T075750Z-2e75f14d/metrics.json) |
+| v3 | 448 | 38.95% | [Run](eval/runs/20261126T080613Z-1d59139e/metrics.json) |
+| v3 | 512 | 37.39% | [Run](eval/runs/20261126T080624Z-553abdef/metrics.json) |
+| v3 | 640 | 41.00% | [Run](eval/runs/20261126T080636Z-abd52aa0/metrics.json) |
+| v3 | 832 | 38.40% | [Run](eval/runs/20261126T080650Z-e905401f/metrics.json) |
+
+To reproduce v3, repeat the InaTRC preparation command with
+`--config configs/finetune-inatrc-v3.yaml` and
+`--version '1 (DetectIt v3 rare-truck subset)'`, with the original v2 weights
+at `data/checkpoints/inatrc-yolo11n-v2.pt`. Train with the v3 fine-tuning config,
+use the archived validation runs to reproduce resolution selection, and use
+the frozen `configs/inatrc-yolo11n-v3.yaml` for the paired test with the
+recorded weights.
+
 ## Roadmap
 
 1. Pretrained YOLO inference on images, with boxes, labels, and confidence.

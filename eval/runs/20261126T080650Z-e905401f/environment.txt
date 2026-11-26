@@ -1,0 +1,7 @@
+Python 3.12.14
+torch==2.6.0+cpu
+torchvision==0.21.0+cpu
+ultralytics==8.3.228
+opencv-python==4.11.0.86
+pycocotools==2.0.10
+numpy==2.2.6

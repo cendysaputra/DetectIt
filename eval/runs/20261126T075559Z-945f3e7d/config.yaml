@@ -1,0 +1,42 @@
+model: YOLO11n v3
+weights: data/checkpoints/inatrc-yolo11n-v2.pt
+imgsz: 448
+confidence: 0.3
+nms_iou: 0.7
+matching_iou: 0.5
+seed: 42
+dataset:
+  manifest: data/inatrc/splits-v3.json
+  previous_manifest: eval/runs/20261126T042619Z-135b89b9/splits.json
+  additional_test_exclusions:
+  - eval/runs/20261126T041035Z-ae81810e/splits.json
+  ratios:
+  - 0.7
+  - 0.15
+  - 0.15
+  sample_sizes:
+    train: 384
+    val: 40
+    test: 100
+  extra_train_minimums:
+    3: 60
+    4: 60
+training:
+  epochs: 6
+  batch: 8
+  patience: 4
+  optimizer: AdamW
+  lr0: 0.0007
+  lrf: 0.1
+  warmup_epochs: 1.0
+  freeze: 0
+  hsv_h: 0.015
+  hsv_s: 0.5
+  hsv_v: 0.3
+  fliplr: 0.5
+  mosaic: 0.25
+  close_mosaic: 2
+config_source: configs/finetune-inatrc-v3.yaml
+runtime:
+  device: cpu
+  workers: 0
