@@ -30,6 +30,12 @@ def training_data(manifest, run):
     return config_path
 
 
+def best_epoch_row(rows):
+    # Ultralytics saves best.pt on the first epoch that reaches the highest
+    # validation mAP50-95 (its detection fitness) and keeps it on later ties.
+    return max(rows, key=lambda row: (float(row["metrics/mAP50-95(B)"]), -int(row["epoch"])))
+
+
 def finetune(config, run, device, workers, git_start):
     manifest_path = config["dataset"]["manifest"]
     manifest = load_manifest(manifest_path)
@@ -56,7 +62,7 @@ def finetune(config, run, device, workers, git_start):
     shutil.copyfile(training.csv, run / "learning-curve.csv")
     with (run / "learning-curve.csv").open(newline="", encoding="utf-8") as stream:
         rows = [{name.strip(): value for name, value in row.items()} for row in csv.DictReader(stream)]
-    best = max(rows, key=lambda row: (float(row["metrics/mAP50-95(B)"]), int(row["epoch"])))
+    best = best_epoch_row(rows)
 
     checkpoint = run / "best.pt"
     shutil.copyfile(source, checkpoint)

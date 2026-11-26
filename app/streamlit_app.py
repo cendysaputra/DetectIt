@@ -47,18 +47,20 @@ def main():
     st.set_page_config(page_title="DetectIt", layout="wide")
     st.title("DetectIt")
     with st.sidebar:
-        options = {
-            path.stem: path for path in sorted(Path("configs").glob("*.yaml"))
-            if "weights" in load_config(path) and "training" not in load_config(path)
-        }
+        # Read each YAML once per rerun; every slider move reruns this script.
+        options = {}
+        for path in sorted(Path("configs").glob("*.yaml")):
+            candidate = load_config(path)
+            if "weights" in candidate and "training" not in candidate:
+                options[path.stem] = (path, candidate)
         selected = st.selectbox("Checkpoint", [None, *options], index=(
             list(options).index("yolo11n-coco") + 1 if "yolo11n-coco" in options else 0
         ), format_func=lambda value: value or "No checkpoint")
-        config = load_config(options[selected]) if selected else None
+        config_path, config = options[selected] if selected else (None, None)
         if config:
             confidence = st.slider("Confidence", 0.0, 1.0, float(config["confidence"]), 0.01, key=f"{selected}-confidence")
             iou = st.slider("NMS IoU", 0.0, 1.0, float(config["nms_iou"]), 0.01, key=f"{selected}-iou")
-            st.caption(f"{config['model']} · {config['dataset']['name']} · {options[selected].name}")
+            st.caption(f"{config['model']} · {config['dataset']['name']} · {config_path.name}")
     mode = st.radio("Source", ("Upload", "Camera"), horizontal=True)
     upload = (
         st.file_uploader("Choose an image or video", type=(*IMAGE_TYPES, *VIDEO_TYPES))
