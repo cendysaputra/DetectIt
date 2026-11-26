@@ -1,0 +1,88 @@
+{
+  "model": "YOLO11n \u00b7 InaTRC",
+  "weights": "best.pt",
+  "weights_sha256": "fae63f7e345c95306ce9b5c7cb5047502cd3e4889bb43769980a0cb0cbde0e70",
+  "initial_weights": "yolo11n.pt",
+  "initial_weights_sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+  "dataset": {
+    "name": "InaTRC",
+    "version": "1 (DetectIt seed-42 subset)",
+    "license": "CC BY 4.0",
+    "source": "https://doi.org/10.17632/kddgphck3b.1"
+  },
+  "split": "train_and_val",
+  "split_sha256": "8ab970909f04207f02c29f63501d4051028bc478253f1349f9a686ceb6371437",
+  "git_revision": "4f029e919bd87b54c0a7e76bd47a74cd2d2c3a9e",
+  "best_epoch": 5,
+  "best_ultralytics_val_map_50_95": 0.13283,
+  "train_minus_val_map_50_95": 0.005872592267011811,
+  "scores": {
+    "train": {
+      "map_50": 0.1906166941261964,
+      "map_50_95": 0.12172406108305205,
+      "per_class_ap": {
+        "Non-truck": {
+          "ap_50_95": 0.3027890798078951,
+          "ap_50": 0.4962192882864613
+        },
+        "Two-axle truck": {
+          "ap_50_95": 0.17374554626770017,
+          "ap_50": 0.280327613901759
+        },
+        "Three-axle truck": {
+          "ap_50_95": 0.13208567933966495,
+          "ap_50": 0.17653656844276172
+        },
+        "Four-axle truck": {
+          "ap_50_95": 0.0,
+          "ap_50": 0.0
+        },
+        "Five-plus-axle truck": {
+          "ap_50_95": 0.0,
+          "ap_50": 0.0
+        }
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "operating_counts": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1388
+      }
+    },
+    "val": {
+      "map_50": 0.17809465909267655,
+      "map_50_95": 0.11585146881604023,
+      "per_class_ap": {
+        "Non-truck": {
+          "ap_50_95": 0.2904775857312994,
+          "ap_50": 0.45547454460200704
+        },
+        "Two-axle truck": {
+          "ap_50_95": 0.16056790318130346,
+          "ap_50": 0.2677906865080549
+        },
+        "Three-axle truck": {
+          "ap_50_95": 0.1282118551675984,
+          "ap_50": 0.16720806435332083
+        },
+        "Four-axle truck": {
+          "ap_50_95": 0.0,
+          "ap_50": 0.0
+        },
+        "Five-plus-axle truck": {
+          "ap_50_95": 0.0,
+          "ap_50": 0.0
+        }
+      },
+      "precision": 0.0,
+      "recall": 0.0,
+      "operating_counts": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 471
+      }
+    }
+  },
+  "reportable": true
+}

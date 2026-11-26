@@ -296,51 +296,51 @@ A phase is finished when its tasks are done and, where the phase produces a meas
 ### Phase 0 — Plan and skeleton
 
 - [x] Add `README.md`, `PLAN.md`, and the pipeline figure (`docs/pipeline.svg`, `docs/pipeline.png`).
-- [ ] Add the package layout above, with `pyproject.toml` or an equivalent, and empty modules that import.
-- [ ] Pin the planned runtime: Python, PyTorch, Ultralytics, OpenCV, Streamlit, torchvision.
-- [ ] Add `.gitignore` for virtual environments, `data/`, weights, and run checkpoints.
-- [ ] Add the MIT `LICENSE` file in the same commit that records the Ultralytics AGPL-3.0 decision.
-- [ ] Confirm `pytest` collects, even if the first tests are the box-format round trip only.
+- [x] Add the package layout above, with `pyproject.toml` or an equivalent, and empty modules that import.
+- [x] Pin the planned runtime: Python, PyTorch, Ultralytics, OpenCV, Streamlit, torchvision.
+- [x] Add `.gitignore` for virtual environments, `data/`, weights, and run checkpoints.
+- [x] Add the MIT `LICENSE` file in the same commit that records the Ultralytics AGPL-3.0 decision.
+- [x] Confirm `pytest` collects, even if the first tests are the box-format round trip only.
 
 ### Phase 1 — Pretrained inference
 
-- [ ] Config for YOLO11n at 640 pixels on the COCO class list.
-- [ ] Config swap for YOLOv8n, same script.
-- [ ] Load the weights, run them on a local image, and save a drawn image plus the raw predictions.
-- [ ] Unit-test the box conversion used to draw that image.
-- [ ] Leave the README results section empty. This phase produces a picture, not a COCO score.
+- [x] Config for YOLO11n at 640 pixels on the COCO class list.
+- [x] Config swap for YOLOv8n, same script.
+- [x] Load the weights, run them on a local image, and save a drawn image plus the raw predictions.
+- [x] Unit-test the box conversion used to draw that image.
+- [x] Leave the README results section empty. This phase produces a picture, not a COCO score.
 
 ### Phase 2 — Evaluation harness
 
-- [ ] `eval/evaluate.py` writes `metrics.json`, the log, the resolved config, and `environment.txt`.
-- [ ] Implement mAP@0.5, mAP@0.5:0.95, precision, recall, and per-class AP on absolute `xyxy` boxes.
-- [ ] Implement batch-1 latency on CPU, and on GPU when one is present.
-- [ ] Smoke the script on a few val2017 images. Keep `"reportable": false`.
-- [ ] Run the loaded nano checkpoint on full COCO val2017.
-- [ ] Write the comparison in the README from that JSON, next to the cited Ultralytics value for the same checkpoint.
+- [x] `eval/evaluate.py` writes `metrics.json`, the log, the resolved config, and `environment.txt`.
+- [x] Implement mAP@0.5, mAP@0.5:0.95, precision, recall, and per-class AP on absolute `xyxy` boxes.
+- [x] Implement batch-1 latency on CPU, and on GPU when one is present.
+- [x] Smoke the script on a few val2017 images. Keep `"reportable": false`.
+- [x] Run the loaded nano checkpoint on full COCO val2017.
+- [x] Write the comparison in the README from that JSON, next to the cited Ultralytics value for the same checkpoint.
 
 ### Phase 3 — Custom dataset
 
-- [ ] Choose the helmet set or the self-labeled set, and record the license and version.
-- [ ] Download or label into `data/`, gitignored.
-- [ ] Write the train, validation, and test id file before any training, and test that the splits are disjoint and cover the images.
-- [ ] Notebook: a handful of images with boxes drawn from the label files, one box format named in the title.
+- [x] Choose the helmet set or the self-labeled set, and record the license and version.
+- [x] Download or label into `data/`, gitignored.
+- [x] Write the train, validation, and test id file before any training, and test that the splits are disjoint and cover the images.
+- [x] Notebook: a handful of images with boxes drawn from the label files, one box format named in the title.
 
 ### Phase 4 — Fine-tune
 
-- [ ] `configs/finetune-helmets.yaml` (or the vehicle equivalent) starting from the stage 1 weights.
-- [ ] Training loop with validation mAP@0.5:0.95 for checkpoint selection.
-- [ ] One test evaluation after the config is fixed. Archive the run.
-- [ ] Update the README from that JSON, including the train-versus-validation gap.
+- [x] `configs/finetune-helmets.yaml` (or the vehicle equivalent) starting from the stage 1 weights.
+- [x] Training loop with validation mAP@0.5:0.95 for checkpoint selection.
+- [x] One test evaluation after the config is fixed. Archive the run.
+- [x] Update the README from that JSON, including the train-versus-validation gap.
 
 ### Phase 5 — Streamlit demo
 
-- [ ] Image upload, boxes, labels, confidences.
-- [ ] Video upload with a frame slider and the same drawing path.
-- [ ] Confidence and IoU sliders wired to the shared post-processing.
-- [ ] Per-class count table for the frame on screen.
-- [ ] Checkpoint and config named on the page.
-- [ ] Empty-checkpoint state that explains why there are no boxes.
+- [x] Image upload, boxes, labels, confidences.
+- [x] Video upload with a frame slider and the same drawing path.
+- [x] Confidence and IoU sliders wired to the shared post-processing.
+- [x] Per-class count table for the frame on screen.
+- [x] Checkpoint and config named on the page.
+- [x] Empty-checkpoint state that explains why there are no boxes.
 
 ### Phase 6 — Optional Faster R-CNN
 
@@ -352,7 +352,7 @@ A phase is finished when its tasks are done and, where the phase produces a meas
 
 Browser stills use Streamlit’s camera input. Live streaming is deferred.
 
-- [ ] Browser-camera still frame through the same predict path as an upload.
+- [x] Browser-camera still frame through the same predict path as an upload.
 - [ ] A live stream only if the still frame is already solid and the extra dependency is worth it.
 
 ## Risks and mitigations

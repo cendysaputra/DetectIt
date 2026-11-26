@@ -1,0 +1,318 @@
+Fine-tuning configs/finetune-inatrc.yaml into eval/runs/20261126T041035Z-ae81810e
+New https://pypi.org/project/ultralytics/8.4.219 available 😃 Update with 'pip install -U ultralytics'
+Ultralytics 8.3.228 🚀 Python-3.12.14 torch-2.6.0+cpu CPU (INTEL XEON PLATINUM 8573C)
+engine/trainer: agnostic_nms=False, amp=True, augment=False, auto_augment=randaugment, batch=8, bgr=0.0, box=7.5, cache=False, cfg=None, classes=None, close_mosaic=2, cls=0.5, compile=False, conf=None, copy_paste=0.0, copy_paste_mode=flip, cos_lr=False, cutmix=0.0, data=/workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/dataset.yaml, degrees=0.0, deterministic=True, device=cpu, dfl=1.5, dnn=False, dropout=0.0, dynamic=False, embed=None, epochs=5, erasing=0.4, exist_ok=False, fliplr=0.5, flipud=0.0, format=torchscript, fraction=1.0, freeze=0, half=False, hsv_h=0.015, hsv_s=0.5, hsv_v=0.3, imgsz=320, int8=False, iou=0.7, keras=False, kobj=1.0, line_width=None, lr0=0.001, lrf=0.01, mask_ratio=4, max_det=300, mixup=0.0, mode=train, model=data/checkpoints/yolo11n.pt, momentum=0.937, mosaic=0.5, multi_scale=False, name=training, nbs=64, nms=False, opset=None, optimize=False, optimizer=AdamW, overlap_mask=True, patience=3, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=/workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e, rect=False, resume=False, retina_masks=False, save=True, save_conf=False, save_crop=False, save_dir=/workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training, save_frames=False, save_json=False, save_period=-1, save_txt=False, scale=0.5, seed=42, shear=0.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=detect, time=None, tracker=botsort.yaml, translate=0.1, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=3.0, warmup_momentum=0.8, weight_decay=0.0005, workers=0, workspace=None
+mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'
+Matplotlib created a temporary cache directory at /tmp/matplotlib-g2zf6lg3 because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Overriding model.yaml nc=80 with nc=5
+
+                   from  n    params  module                                       arguments
+  0                  -1  1       464  ultralytics.nn.modules.conv.Conv             [3, 16, 3, 2]
+  1                  -1  1      4672  ultralytics.nn.modules.conv.Conv             [16, 32, 3, 2]
+  2                  -1  1      6640  ultralytics.nn.modules.block.C3k2            [32, 64, 1, False, 0.25]
+  3                  -1  1     36992  ultralytics.nn.modules.conv.Conv             [64, 64, 3, 2]
+  4                  -1  1     26080  ultralytics.nn.modules.block.C3k2            [64, 128, 1, False, 0.25]
+  5                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+  6                  -1  1     87040  ultralytics.nn.modules.block.C3k2            [128, 128, 1, True]
+  7                  -1  1    295424  ultralytics.nn.modules.conv.Conv             [128, 256, 3, 2]
+  8                  -1  1    346112  ultralytics.nn.modules.block.C3k2            [256, 256, 1, True]
+  9                  -1  1    164608  ultralytics.nn.modules.block.SPPF            [256, 256, 5]
+ 10                  -1  1    249728  ultralytics.nn.modules.block.C2PSA           [256, 256, 1]
+ 11                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 12             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 13                  -1  1    111296  ultralytics.nn.modules.block.C3k2            [384, 128, 1, False]
+ 14                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 15             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 16                  -1  1     32096  ultralytics.nn.modules.block.C3k2            [256, 64, 1, False]
+ 17                  -1  1     36992  ultralytics.nn.modules.conv.Conv             [64, 64, 3, 2]
+ 18            [-1, 13]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 19                  -1  1     86720  ultralytics.nn.modules.block.C3k2            [192, 128, 1, False]
+ 20                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+ 21            [-1, 10]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 22                  -1  1    378880  ultralytics.nn.modules.block.C3k2            [384, 256, 1, True]
+ 23        [16, 19, 22]  1    431647  ultralytics.nn.modules.head.Detect           [5, [64, 128, 256]]
+YOLO11n summary: 181 layers, 2,590,815 parameters, 2,590,799 gradients, 6.4 GFLOPs
+
+Transferred 448/499 items from pretrained weights
+Freezing layer 'model.23.dfl.conv.weight'
+train: Fast image access ✅ (ping: 0.0±0.0 ms, read: 1254.9±867.8 MB/s, size: 85.8 KB)
+
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 69 images, 0 backgrounds, 0 corrupt: 46% ━━━━━╸────── 69/150 205.3it/s 0.1s<0.4s
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 89 images, 0 backgrounds, 0 corrupt: 59% ━━━━━━━───── 89/150 200.0it/s 0.2s<0.3s
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 97 images, 0 backgrounds, 0 corrupt: 65% ━━━━━━━╸──── 97/150 162.5it/s 0.3s<0.3s
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 106 images, 0 backgrounds, 0 corrupt: 71% ━━━━━━━━──── 106/150 132.7it/s 0.5s<0.3s
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 150 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 150/150 297.7it/s 0.5s
+train: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels... 150 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 150/150 297.5it/s 0.5s
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002107.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002122.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002139.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002166.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002210.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002250.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002282.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002294.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002326.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002331.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002351.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002387.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002400.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002412.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002413.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002424.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002429.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002436.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002455.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002457.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002459.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002472.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002482.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002500.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002507.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002552.jpg: corrupt JPEG restored and saved
+train: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/images/002559.jpg: corrupt JPEG restored and saved
+train: New cache created: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/train/labels.cache
+val: Fast image access ✅ (ping: 0.0±0.0 ms, read: 2695.1±1064.2 MB/s, size: 69.5 KB)
+
+val: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/labels... 29 images, 0 backgrounds, 0 corrupt: 72% ━━━━━━━━╸─── 29/40 76.6it/s 0.1s<0.1s
+val: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/labels... 40 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 40/40 351.7it/s 0.1s
+val: Scanning /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/labels... 40 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 40/40 351.3it/s 0.1s
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002135.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002373.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002379.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002495.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002520.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002536.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002537.jpg: corrupt JPEG restored and saved
+val: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/images/002574.jpg: corrupt JPEG restored and saved
+val: New cache created: /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training-data/val/labels.cache
+Plotting labels to /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training/labels.jpg...
+optimizer: AdamW(lr=0.001, momentum=0.937) with parameter groups 81 weight(decay=0.0), 88 weight(decay=0.0005), 87 bias(decay=0.0)
+Image sizes 320 train, 320 val
+Using 0 dataloader workers
+Logging results to /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training
+Starting training for 5 epochs...
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+        1/5         0G      1.394      3.998      1.098        114        320: 0% ──────────── 0/19  4.2s
+        1/5         0G      1.463       3.93      1.078        110        320: 5% ╸─────────── 1/19 9.6s/it 7.1s<2:52
+        1/5         0G      1.566      3.917      1.071        125        320: 11% ━─────────── 2/19 5.3s/it 9.7s<1:30
+        1/5         0G      1.504      3.841      1.046         86        320: 16% ━╸────────── 3/19 4.1s/it 12.4s<1:06
+        1/5         0G      1.483      3.756      1.036        130        320: 21% ━━╸───────── 4/19 3.7s/it 15.4s<55.6s
+        1/5         0G      1.482      3.694       1.03         95        320: 26% ━━━───────── 5/19 3.0s/it 17.4s<41.4s
+        1/5         0G      1.463      3.603       1.02         73        320: 32% ━━━╸──────── 6/19 3.8s/it 28.9s<49.5s
+        1/5         0G      1.461      3.536      1.013         64        320: 37% ━━━━──────── 7/19 4.1s/it 33.8s<49.1s
+        1/5         0G      1.458      3.441      1.012         91        320: 42% ━━━━━─────── 8/19 4.0s/it 37.8s<44.5s
+        1/5         0G      1.481      3.382       1.01         99        320: 47% ━━━━━╸────── 9/19 2.8s/it 39.4s<27.8s
+        1/5         0G      1.481      3.317      1.015         75        320: 53% ━━━━━━────── 10/19 1.9s/it 40.5s<17.3s
+        1/5         0G       1.48      3.259       1.01         94        320: 58% ━━━━━━╸───── 11/19 1.7s/it 41.8s<13.3s
+        1/5         0G      1.476       3.21      1.012         80        320: 63% ━━━━━━━╸──── 12/19 1.7s/it 43.7s<12.1s
+        1/5         0G      1.482      3.164      1.011         80        320: 68% ━━━━━━━━──── 13/19 1.8s/it 45.7s<10.9s
+        1/5         0G      1.487      3.118      1.012        103        320: 74% ━━━━━━━━╸─── 14/19 1.8s/it 47.4s<8.8s
+        1/5         0G      1.492      3.084      1.011         91        320: 79% ━━━━━━━━━─── 15/19 1.8s/it 49.3s<7.2s
+        1/5         0G      1.482      3.049      1.007         65        320: 84% ━━━━━━━━━━── 16/19 1.9s/it 51.3s<5.6s
+        1/5         0G      1.484      3.022      1.009         61        320: 89% ━━━━━━━━━━╸─ 17/19 1.8s/it 52.9s<3.5s
+        1/5         0G      1.472      2.978      1.005         62        320: 95% ━━━━━━━━━━━─ 18/19 1.7s/it 54.5s<1.7s
+        1/5         0G      1.472      2.978      1.005         62        320: 100% ━━━━━━━━━━━━ 19/19 2.9s/it 54.5s
+        1/5         0G      1.472      2.978      1.005         62        320: 100% ━━━━━━━━━━━━ 19/19 2.9s/it 54.5s
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 5.0s/it 1.5s<9.9s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 3.1s/it 3.1s<3.1s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.1s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.1s
+                   all         40        471    0.00145      0.111    0.00248   0.000425
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+        2/5         0G      1.608      2.483     0.9589        155        320: 0% ──────────── 0/19  1.8s
+        2/5         0G      1.483      2.439     0.9761        134        320: 5% ╸─────────── 1/19 4.7s/it 3.2s<1:25
+        2/5         0G       1.54      2.379      1.011         88        320: 11% ━─────────── 2/19 2.6s/it 4.5s<44.7s
+        2/5         0G      1.519      2.352     0.9935         91        320: 16% ━╸────────── 3/19 2.3s/it 6.2s<36.4s
+        2/5         0G      1.518      2.328      1.003        108        320: 21% ━━╸───────── 4/19 2.0s/it 7.7s<29.5s
+        2/5         0G      1.544      2.328          1        174        320: 26% ━━━───────── 5/19 1.9s/it 9.5s<26.8s
+        2/5         0G      1.517      2.307     0.9969        108        320: 32% ━━━╸──────── 6/19 1.9s/it 11.4s<24.8s
+        2/5         0G      1.506       2.32     0.9934         72        320: 37% ━━━━──────── 7/19 1.6s/it 12.5s<18.6s
+        2/5         0G      1.497      2.306     0.9948        101        320: 42% ━━━━━─────── 8/19 1.6s/it 14.4s<18.1s
+        2/5         0G      1.504      2.299     0.9955        103        320: 47% ━━━━━╸────── 9/19 1.6s/it 15.9s<15.9s
+        2/5         0G       1.49      2.303     0.9875        101        320: 53% ━━━━━━────── 10/19 1.9s/it 19.0s<16.8s
+        2/5         0G      1.496      2.295      0.989        163        320: 58% ━━━━━━╸───── 11/19 1.8s/it 20.6s<14.1s
+        2/5         0G      1.491      2.312     0.9931         80        320: 63% ━━━━━━━╸──── 12/19 2.0s/it 23.6s<14.1s
+        2/5         0G      1.485      2.297     0.9942        118        320: 68% ━━━━━━━━──── 13/19 1.9s/it 25.2s<11.2s
+        2/5         0G      1.477      2.293     0.9951         79        320: 74% ━━━━━━━━╸─── 14/19 2.2s/it 28.8s<10.9s
+        2/5         0G      1.479      2.289     0.9977        118        320: 79% ━━━━━━━━━─── 15/19 2.4s/it 32.0s<9.6s
+        2/5         0G      1.459      2.282     0.9969         62        320: 84% ━━━━━━━━━━── 16/19 2.2s/it 33.8s<6.6s
+        2/5         0G      1.463      2.275      1.001        101        320: 89% ━━━━━━━━━━╸─ 17/19 2.1s/it 35.8s<4.3s
+        2/5         0G      1.462       2.26      0.999         87        320: 95% ━━━━━━━━━━━─ 18/19 2.0s/it 37.5s<2.0s
+        2/5         0G      1.462       2.26      0.999         87        320: 100% ━━━━━━━━━━━━ 19/19 2.0s/it 37.5s
+        2/5         0G      1.462       2.26      0.999         87        320: 100% ━━━━━━━━━━━━ 19/19 2.0s/it 37.5s
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 5.5s/it 1.7s<11.0s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 4.2s/it 4.3s<4.2s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.8s/it 5.4s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.8s/it 5.4s
+                   all         40        471      0.163      0.236      0.117     0.0766
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+        3/5         0G       1.16      2.354     0.9366         58        320: 0% ──────────── 0/19  1.6s
+        3/5         0G      1.383       2.39      0.957         98        320: 5% ╸─────────── 1/19 5.9s/it 3.4s<1:47
+        3/5         0G      1.463       2.33     0.9786        141        320: 11% ━─────────── 2/19 3.4s/it 5.1s<57.6s
+        3/5         0G      1.473        2.3     0.9896         70        320: 16% ━╸────────── 3/19 3.1s/it 7.8s<50.3s
+        3/5         0G      1.429      2.286     0.9875         88        320: 21% ━━╸───────── 4/19 3.1s/it 10.9s<47.1s
+        3/5         0G      1.412      2.221     0.9842         84        320: 26% ━━━───────── 5/19 3.9s/it 20.4s<55.1s
+        3/5         0G      1.422      2.207     0.9793        181        320: 32% ━━━╸──────── 6/19 3.4s/it 22.9s<43.6s
+        3/5         0G      1.397      2.211      0.979         59        320: 37% ━━━━──────── 7/19 3.1s/it 25.5s<36.9s
+        3/5         0G      1.395      2.197      0.984         91        320: 42% ━━━━━─────── 8/19 3.4s/it 29.8s<37.0s
+        3/5         0G      1.384      2.172     0.9831         76        320: 47% ━━━━━╸────── 9/19 3.1s/it 32.3s<30.7s
+        3/5         0G      1.378      2.149     0.9782        126        320: 53% ━━━━━━────── 10/19 3.2s/it 35.7s<28.4s
+        3/5         0G      1.379      2.149     0.9746        131        320: 58% ━━━━━━╸───── 11/19 3.0s/it 38.5s<24.2s
+        3/5         0G      1.372      2.126     0.9723        106        320: 63% ━━━━━━━╸──── 12/19 3.3s/it 42.8s<23.2s
+        3/5         0G      1.385      2.116     0.9733        127        320: 68% ━━━━━━━━──── 13/19 3.3s/it 45.9s<19.5s
+        3/5         0G      1.368      2.106     0.9729         76        320: 74% ━━━━━━━━╸─── 14/19 2.6s/it 47.7s<13.1s
+        3/5         0G      1.369       2.11     0.9774         65        320: 79% ━━━━━━━━━─── 15/19 2.4s/it 49.6s<9.4s
+        3/5         0G      1.367      2.113     0.9736         91        320: 84% ━━━━━━━━━━── 16/19 2.1s/it 51.3s<6.4s
+        3/5         0G      1.363      2.096     0.9731         84        320: 89% ━━━━━━━━━━╸─ 17/19 2.1s/it 53.5s<4.3s
+        3/5         0G       1.38       2.11     0.9755        100        320: 95% ━━━━━━━━━━━─ 18/19 1.8s/it 54.8s<1.8s
+        3/5         0G       1.38       2.11     0.9755        100        320: 100% ━━━━━━━━━━━━ 19/19 2.9s/it 54.8s
+        3/5         0G       1.38       2.11     0.9755        100        320: 100% ━━━━━━━━━━━━ 19/19 2.9s/it 54.8s
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 4.7s/it 1.4s<9.4s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 3.2s/it 3.3s<3.2s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.3s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.3s
+                   all         40        471      0.112      0.334      0.157      0.104
+Closing dataloader mosaic
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+        4/5         0G      1.357       2.04     0.9467         78        320: 0% ──────────── 0/19  1.7s
+        4/5         0G      1.288      1.998     0.9497         61        320: 5% ╸─────────── 1/19 6.3s/it 3.6s<1:54
+        4/5         0G      1.251      1.977     0.9452         68        320: 11% ━─────────── 2/19 3.6s/it 5.4s<1:02
+        4/5         0G      1.222      1.915     0.9383         83        320: 16% ━╸────────── 3/19 2.7s/it 7.1s<43.3s
+        4/5         0G      1.241      1.914     0.9418         85        320: 21% ━━╸───────── 4/19 2.2s/it 8.7s<33.4s
+        4/5         0G      1.264       1.97     0.9518         61        320: 26% ━━━───────── 5/19 2.2s/it 10.8s<30.8s
+        4/5         0G      1.272      1.966     0.9529         78        320: 32% ━━━╸──────── 6/19 2.0s/it 12.4s<25.6s
+        4/5         0G      1.282       1.97     0.9577         87        320: 37% ━━━━──────── 7/19 1.9s/it 14.2s<22.8s
+        4/5         0G      1.283       1.96      0.963         62        320: 42% ━━━━━─────── 8/19 2.0s/it 16.3s<21.5s
+        4/5         0G      1.279      1.953     0.9631         70        320: 47% ━━━━━╸────── 9/19 2.1s/it 19.0s<21.3s
+        4/5         0G      1.294       1.96     0.9614         82        320: 53% ━━━━━━────── 10/19 2.0s/it 20.7s<17.9s
+        4/5         0G      1.321       1.97     0.9638         69        320: 58% ━━━━━━╸───── 11/19 2.0s/it 22.6s<15.6s
+        4/5         0G      1.306      1.965     0.9625         67        320: 63% ━━━━━━━╸──── 12/19 1.9s/it 24.3s<13.1s
+        4/5         0G      1.307      1.971     0.9611         86        320: 68% ━━━━━━━━──── 13/19 1.9s/it 26.1s<11.2s
+        4/5         0G        1.3      1.957     0.9562         69        320: 74% ━━━━━━━━╸─── 14/19 1.7s/it 27.6s<8.7s
+        4/5         0G      1.294       1.95     0.9529         69        320: 79% ━━━━━━━━━─── 15/19 1.7s/it 29.2s<6.7s
+        4/5         0G      1.291      1.952     0.9511         72        320: 84% ━━━━━━━━━━── 16/19 1.7s/it 30.9s<5.1s
+        4/5         0G      1.286      1.955     0.9489         68        320: 89% ━━━━━━━━━━╸─ 17/19 1.8s/it 32.9s<3.5s
+        4/5         0G      1.291      1.956      0.949         60        320: 95% ━━━━━━━━━━━─ 18/19 1.7s/it 34.4s<1.7s
+        4/5         0G      1.291      1.956      0.949         60        320: 100% ━━━━━━━━━━━━ 19/19 1.8s/it 34.4s
+        4/5         0G      1.291      1.956      0.949         60        320: 100% ━━━━━━━━━━━━ 19/19 1.8s/it 34.4s
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 5.0s/it 1.5s<10.0s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 3.1s/it 3.1s<3.1s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.3s/it 4.0s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.3s/it 4.0s
+                   all         40        471     0.0654      0.507      0.188      0.121
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+        5/5         0G      1.195      1.867      0.914         74        320: 0% ──────────── 0/19  1.8s
+        5/5         0G      1.273      1.873     0.9343         80        320: 5% ╸─────────── 1/19 4.8s/it 3.2s<1:27
+        5/5         0G      1.233      2.016     0.9518         48        320: 11% ━─────────── 2/19 3.0s/it 4.8s<50.7s
+        5/5         0G      1.226      2.011     0.9518         82        320: 16% ━╸────────── 3/19 2.3s/it 6.3s<36.8s
+        5/5         0G      1.233      2.008     0.9615         63        320: 21% ━━╸───────── 4/19 2.0s/it 7.9s<30.4s
+        5/5         0G      1.211      1.942     0.9475         71        320: 26% ━━━───────── 5/19 1.8s/it 9.3s<25.2s
+        5/5         0G      1.229      1.939     0.9517         64        320: 32% ━━━╸──────── 6/19 1.7s/it 10.9s<22.4s
+        5/5         0G      1.228      1.922     0.9534         77        320: 37% ━━━━──────── 7/19 1.9s/it 13.2s<22.4s
+        5/5         0G      1.228      1.896     0.9529         81        320: 42% ━━━━━─────── 8/19 1.9s/it 15.3s<21.2s
+        5/5         0G      1.234      1.895     0.9516         82        320: 47% ━━━━━╸────── 9/19 1.8s/it 16.8s<17.9s
+        5/5         0G      1.216      1.875     0.9452         64        320: 53% ━━━━━━────── 10/19 1.7s/it 18.2s<14.9s
+        5/5         0G      1.226      1.882     0.9461         73        320: 58% ━━━━━━╸───── 11/19 1.6s/it 19.6s<12.5s
+        5/5         0G      1.239      1.884     0.9445         90        320: 63% ━━━━━━━╸──── 12/19 1.6s/it 21.2s<11.0s
+        5/5         0G      1.251       1.88     0.9466         80        320: 68% ━━━━━━━━──── 13/19 1.6s/it 22.9s<9.6s
+        5/5         0G      1.243      1.878     0.9438         48        320: 74% ━━━━━━━━╸─── 14/19 1.5s/it 24.1s<7.4s
+        5/5         0G      1.242      1.869     0.9419         88        320: 79% ━━━━━━━━━─── 15/19 1.5s/it 25.6s<5.9s
+        5/5         0G      1.238      1.857      0.941         88        320: 84% ━━━━━━━━━━── 16/19 1.6s/it 27.4s<4.7s
+        5/5         0G      1.247      1.866     0.9411         61        320: 89% ━━━━━━━━━━╸─ 17/19 1.7s/it 29.5s<3.4s
+        5/5         0G      1.252      1.873     0.9373         60        320: 95% ━━━━━━━━━━━─ 18/19 1.4s/it 30.5s<1.4s
+        5/5         0G      1.252      1.873     0.9373         60        320: 100% ━━━━━━━━━━━━ 19/19 1.6s/it 30.5s
+        5/5         0G      1.252      1.873     0.9373         60        320: 100% ━━━━━━━━━━━━ 19/19 1.6s/it 30.5s
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 4.3s/it 1.3s<8.7s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 3.1s/it 3.2s<3.1s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.3s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.4s/it 4.3s
+                   all         40        471     0.0384      0.591      0.199      0.133
+
+5 epochs completed in 0.066 hours.
+Optimizer stripped from /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training/weights/last.pt, 5.4MB
+Optimizer stripped from /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training/weights/best.pt, 5.4MB
+
+Validating /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training/weights/best.pt...
+Ultralytics 8.3.228 🚀 Python-3.12.14 torch-2.6.0+cpu CPU (INTEL XEON PLATINUM 8573C)
+YOLO11n summary (fused): 100 layers, 2,583,127 parameters, 0 gradients, 6.3 GFLOPs
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 1/3 5.3s/it 1.6s<10.6s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 2/3 4.0s/it 4.1s<4.0s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.9s/it 5.6s
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 3/3 1.9s/it 5.6s
+                   all         40        471     0.0384      0.597        0.2      0.133
+             Non-truck         38        285      0.113      0.702      0.494      0.323
+        Two-axle truck         36        140     0.0412      0.914      0.278      0.176
+      Three-axle truck         19         32    0.00373      0.812      0.192      0.148
+       Four-axle truck          4          5          0          0          0          0
+  Five-plus-axle truck          8          9     0.0338      0.556     0.0347     0.0186
+Speed: 2.0ms preprocess, 75.7ms inference, 0.0ms loss, 41.9ms postprocess per image
+Results saved to /workspace/work/DetectIt/eval/runs/20261126T041035Z-ae81810e/training
+Scoring the selected checkpoint on train
+creating index...
+index created!
+Evaluated 8/150 images
+Evaluated 150/150 images
+Loading and preparing results...
+DONE (t=0.09s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=3.27s).
+Accumulating evaluation results...
+DONE (t=0.46s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.122
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.191
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.136
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.042
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.162
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.261
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.094
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.252
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.286
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.133
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.340
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.486
+Scoring the selected checkpoint on val
+creating index...
+index created!
+Evaluated 8/40 images
+Evaluated 40/40 images
+Loading and preparing results...
+DONE (t=0.04s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=0.89s).
+Accumulating evaluation results...
+DONE (t=0.13s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.116
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.178
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.131
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.033
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.220
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.298
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.088
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.223
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.261
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.117
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.431
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.514
+Saved training evidence to eval/runs/20261126T041035Z-ae81810e

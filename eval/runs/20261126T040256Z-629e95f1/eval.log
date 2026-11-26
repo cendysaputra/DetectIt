@@ -1,0 +1,53 @@
+Evaluating configs/yolo11n-coco.yaml into eval/runs/20261126T040256Z-629e95f1
+loading annotations into memory...
+Done (t=0.55s)
+creating index...
+index created!
+Evaluated 8/5000 images
+Evaluated 208/5000 images
+Evaluated 408/5000 images
+Evaluated 608/5000 images
+Evaluated 808/5000 images
+Evaluated 1008/5000 images
+Evaluated 1208/5000 images
+Evaluated 1408/5000 images
+Evaluated 1608/5000 images
+Evaluated 1808/5000 images
+Evaluated 2008/5000 images
+Evaluated 2208/5000 images
+Evaluated 2408/5000 images
+Evaluated 2608/5000 images
+Evaluated 2808/5000 images
+Evaluated 3008/5000 images
+Evaluated 3208/5000 images
+Evaluated 3408/5000 images
+Evaluated 3608/5000 images
+Evaluated 3808/5000 images
+Evaluated 4008/5000 images
+Evaluated 4208/5000 images
+Evaluated 4408/5000 images
+Evaluated 4608/5000 images
+Evaluated 4808/5000 images
+Evaluated 5000/5000 images
+Loading and preparing results...
+DONE (t=2.30s)
+creating index...
+index created!
+Running per image evaluation...
+Evaluate annotation type *bbox*
+DONE (t=39.66s).
+Accumulating evaluation results...
+DONE (t=6.28s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.387
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.542
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.421
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.195
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.425
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.561
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.312
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.510
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.561
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.333
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.625
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.734
+Saved eval/runs/20261126T040256Z-629e95f1/metrics.json (reportable=True)

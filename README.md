@@ -170,7 +170,29 @@ Select **No checkpoint** to preview the upload without inference.
 
 ## Results
 
-Detailed metrics and per-class AP are stored alongside each run.
+| Run | mAP@0.5 | mAP@0.5:0.95 | Precision | Recall | CPU latency | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| YOLO11n · full COCO val2017 | 54.24% | 38.72% | 69.62% | 51.60% | 73.0 ms | [Run](eval/runs/20261126T040256Z-629e95f1/metrics.json) |
+| Fine-tuned YOLO11n · InaTRC subset test | 16.86% | 9.87% | 0.00% | 0.00% | 62.8 ms | [Run](eval/runs/20261126T041533Z-fe031ca2/metrics.json) |
+
+Precision and recall use confidence 0.25, NMS IoU 0.70, and matching IoU
+0.50. AP uses confidence 0.001 and the COCO bounding-box evaluator.
+Latency measures single-image preprocessing, inference, and postprocessing
+after warmup, with images already decoded. The run JSON includes throughput
+and per-class AP. Both experiments ran on CPU.
+
+Ultralytics publishes 39.5% mAP@0.5:0.95 for
+YOLO11n at 640 pixels on COCO val2017. DetectIt's CPU PyTorch run measured
+0.78 percentage points below that reference using the
+same checkpoint family and validation split. [Ultralytics YOLO11](https://docs.ultralytics.com/models/yolo11/)
+
+The InaTRC subset used 150 training, 40 validation, and 40 test images.
+The selected checkpoint's train-minus-validation mAP@0.5:0.95 gap was
++0.59 percentage points. No InaTRC test detections survived the frozen 0.25 confidence threshold.
+The small held-out sample, scarce examples of the largest trucks, and
+possible near-duplicate CCTV frames across the published splits limit
+generalization. InaTRC CPU latency was measured while the COCO run was active.
+[Training metrics](eval/runs/20261126T041035Z-ae81810e/metrics.json) · [Learning curve](eval/runs/20261126T041035Z-ae81810e/learning-curve.csv) · [Frozen splits](eval/runs/20261126T041035Z-ae81810e/splits.json)
 
 ## Roadmap
 

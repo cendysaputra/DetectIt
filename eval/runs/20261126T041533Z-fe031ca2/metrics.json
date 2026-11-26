@@ -1,0 +1,75 @@
+{
+  "map_50": 0.16855350995695711,
+  "map_50_95": 0.09867442810948462,
+  "per_class_ap": {
+    "Non-truck": {
+      "ap_50_95": 0.24319798672507917,
+      "ap_50": 0.4304788724189963
+    },
+    "Two-axle truck": {
+      "ap_50_95": 0.1836863465884294,
+      "ap_50": 0.31339969626049946
+    },
+    "Three-axle truck": {
+      "ap_50_95": 0.06648780723391451,
+      "ap_50": 0.09888898110528994
+    },
+    "Four-axle truck": {
+      "ap_50_95": 0.0,
+      "ap_50": 0.0
+    },
+    "Five-plus-axle truck": {
+      "ap_50_95": 0.0,
+      "ap_50": 0.0
+    }
+  },
+  "precision": 0.0,
+  "recall": 0.0,
+  "operating_counts": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 447
+  },
+  "latency": {
+    "cpu": {
+      "name": "x86_64",
+      "torch_threads": 2,
+      "batch_size": 1,
+      "images": 25,
+      "warmup": 3,
+      "ms_per_image": 62.784990439995454,
+      "frames_per_second": 15.927373612578867
+    }
+  },
+  "model": "YOLO11n \u00b7 InaTRC",
+  "weights": "inatrc-yolo11n.pt",
+  "weights_sha256": "fae63f7e345c95306ce9b5c7cb5047502cd3e4889bb43769980a0cb0cbde0e70",
+  "dataset": {
+    "name": "InaTRC",
+    "version": "1 (DetectIt seed-42 subset)",
+    "license": "CC BY 4.0",
+    "source": "https://doi.org/10.17632/kddgphck3b.1"
+  },
+  "split": "test",
+  "split_sha256": "8ab970909f04207f02c29f63501d4051028bc478253f1349f9a686ceb6371437",
+  "evaluated_images": 40,
+  "git_revision": "7529253817eb31ce21af8d574cb9d69f58060765",
+  "confidence": 0.25,
+  "nms_iou": 0.7,
+  "matching_iou": 0.5,
+  "ap_confidence": 0.001,
+  "ap_nms_iou": 0.7,
+  "ap_matching_iou": [
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "reportable": true
+}

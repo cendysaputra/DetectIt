@@ -1,0 +1,24 @@
+model: "YOLO11n \xB7 InaTRC"
+weights: data/checkpoints/inatrc-yolo11n.pt
+imgsz: 320
+confidence: 0.25
+nms_iou: 0.7
+matching_iou: 0.5
+seed: 42
+dataset:
+  name: InaTRC
+  version: 1 (DetectIt seed-42 subset)
+  license: CC BY 4.0
+  source: https://doi.org/10.17632/kddgphck3b.1
+  manifest: data/inatrc/splits.json
+fixed_test:
+  weights_sha256: fae63f7e345c95306ce9b5c7cb5047502cd3e4889bb43769980a0cb0cbde0e70
+  manifest_sha256: 8ab970909f04207f02c29f63501d4051028bc478253f1349f9a686ceb6371437
+config_source: configs/inatrc-yolo11n.yaml
+evaluation:
+  split: test
+  device: cpu
+  batch: 16
+  limit: null
+  benchmark_images: 25
+  warmup: 3
