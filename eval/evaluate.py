@@ -37,7 +37,19 @@ def main():
         revision_config = args.config.resolve()
         if not revision_config.is_relative_to(Path.cwd()) or not _tracked(revision_config):
             parser.error("The test config must be tracked in Git.")
-        manifest_hash = sha256(config["dataset"]["manifest"])
+        manifest_path = config["dataset"].get("manifest")
+        if not manifest_path or not Path(manifest_path).is_file():
+            parser.error("Test evaluation requires a local frozen dataset manifest.")
+        manifest_hash = sha256(manifest_path)
+        for checkpoint in (config, reference) if reference is not None else (config,):
+            frozen = checkpoint.get("fixed_test", {})
+            weights = Path(checkpoint["weights"])
+            if (
+                frozen.get("manifest_sha256") != manifest_hash
+                or not weights.is_file()
+                or frozen.get("weights_sha256") != sha256(weights)
+            ):
+                parser.error(f"Frozen test hashes do not match the local manifest and weights for {weights}.")
         ledger = Path("data/test-evaluations")
         ledger.mkdir(parents=True, exist_ok=True)
         claim = ledger / f"{manifest_hash}.txt"
