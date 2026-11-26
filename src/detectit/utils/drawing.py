@@ -18,9 +18,16 @@ def draw_detections(image, detections, *, show_confidence=True):
         if show_confidence:
             label = f"{label} {detection.confidence:.2f}"
         (text_width, text_height), baseline = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-        top = max(text_height + baseline + 2, y1)
-        cv2.rectangle(drawn, (x1, top - text_height - baseline - 2), (x1 + text_width + 4, top), color, -1)
-        cv2.putText(drawn, label, (x1 + 2, top - baseline), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+        text_left = min(x1, max(0, width - text_width - 4))
+        text_bottom = min(height - 1, max(text_height + baseline + 2, y1))
+        cv2.rectangle(
+            drawn, (text_left, text_bottom - text_height - baseline - 2),
+            (text_left + text_width + 4, text_bottom), color, -1,
+        )
+        cv2.putText(
+            drawn, label, (text_left + 2, text_bottom - baseline),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA,
+        )
     return drawn
 
 
