@@ -22,10 +22,8 @@ def main():
         parser.error("Batch, subset and benchmark sizes must be positive. Warmup must be nonnegative.")
 
     config = load_config(args.config)
-    reference = config.get("reference")
-    if reference is not None and (
-        args.split != "test" or reference["dataset"]["manifest"] != config["dataset"]["manifest"]
-    ):
+    reference = config.get("reference") if args.split == "test" else None
+    if reference is not None and reference["dataset"]["manifest"] != config["dataset"]["manifest"]:
         parser.error("A reference checkpoint requires the same frozen test manifest.")
     git_start = git_state()
     final_test = args.split == "test" and args.limit is None

@@ -157,6 +157,27 @@ accepting `valid`). Use `--layout standard` for an `images/{train,val,test}`
 export or `--layout unsplit` for `images/` and `labels/` without published
 splits. Place datasets under `data/`. Use an empty label file for an image with no objects. The notebook previews annotations from the frozen InaTRC training split. [Annotation notebook](notebooks/inspect_inatrc_labels.ipynb)
 
+### Reproduce the InaTRC v2 experiment
+
+Keep the original fine-tuned weights at `data/checkpoints/inatrc-yolo11n.pt`.
+Repeat the InaTRC preparation command with `--config configs/finetune-inatrc-v2.yaml`
+and `--version '1 (DetectIt v2 comparison subset)'`. The v2 manifest expands
+the training split, retains the original validation images, and samples a new
+test cohort from the remaining published test images.
+
+```bash
+python eval/train.py --config configs/finetune-inatrc-v2.yaml --device cpu --workers 0
+python eval/select_confidence.py --config eval/runs/<v2-train-run-id>/checkpoint.yaml \
+  --device cpu --output eval/runs/<v2-train-run-id>/confidence-selection.json
+```
+
+The committed v2 evaluation config records the chosen confidence and both
+checkpoint hashes. To reproduce the paired test with those checkpoints, place
+the v2 weights at `data/checkpoints/inatrc-yolo11n-v2.pt` and run
+`python eval/evaluate.py --config configs/inatrc-yolo11n-v2.yaml --split test --device cpu`.
+When retraining locally, freeze a new config with the generated checkpoint
+hashes and the confidence selected on validation.
+
 ### Run the app
 
 ```bash
