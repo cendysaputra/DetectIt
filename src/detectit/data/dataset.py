@@ -4,7 +4,7 @@ import random
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 from pycocotools.coco import COCO
 
 from detectit.data.boxes import clip_xyxy, normalized_cxcywh_to_xyxy, xyxy_to_xywh
@@ -63,7 +63,25 @@ def paired_images(root, folder):
             yield path.relative_to(root), label.relative_to(root)
 
 
-def prepare(root, output, *, name, dataset_version, license_name, source, names, ratios, seed, layout):
+def sample_split(records, size, seed):
+    if not 0 < size <= len(records):
+        raise ValueError(f"Sample size {size} exceeds the available {len(records)} images or is not positive.")
+    shuffled = list(records)
+    random.Random(seed).shuffle(shuffled)
+    uncovered = {class_id for record in records for class_id in record["classes"]}
+    sample = []
+    while uncovered:
+        best = max(shuffled, key=lambda record: len(uncovered.intersection(record["classes"])))
+        shuffled.remove(best)
+        sample.append(best)
+        uncovered.difference_update(best["classes"])
+    if len(sample) > size:
+        raise ValueError("The requested sample is too small to preserve all classes.")
+    return sample + shuffled[:size - len(sample)]
+
+
+def prepare(root, output, *, name, dataset_version, license_name, source, names, ratios, seed, layout,
+            sample_sizes=None):
     root = root.resolve()
     if not names or len(set(names)) != len(names) or len(names) < 2:
         raise ValueError("Provide at least two distinct class names in label ID order.")
@@ -88,16 +106,16 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
         candidates["all"] = list(paired_images(root, root))
 
     splits = {}
-    seen_images = set()
+    image_hashes = Counter()
     seen_labels = set()
     for split, pairs in candidates.items():
         records = []
         for image, label in pairs:
             labels = read_labels(root / label, len(names))
             image_hash = sha256(root / image)
-            if image_hash in seen_images or label in seen_labels:
-                raise ValueError(f"Duplicate image or shared label: {image}")
-            seen_images.add(image_hash)
+            if label in seen_labels:
+                raise ValueError(f"Multiple images would share one label file: {image}")
+            image_hashes[image_hash] += 1
             seen_labels.add(label)
             records.append({
                 "image": image.as_posix(), "label": label.as_posix(),
@@ -108,6 +126,15 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
 
     if layout == "unsplit":
         splits = stratify(splits["all"], ratios, seed)
+    source_sizes = {split: len(records) for split, records in splits.items()}
+    duplicate_images = sum(count for count in image_hashes.values() if count > 1)
+    if duplicate_images and sample_sizes is None:
+        raise ValueError("The source contains byte-identical images. Resolve duplicates before freezing the splits.")
+    if sample_sizes is not None:
+        for split in SPLITS:
+            unique = [record for record in splits[split] if image_hashes[record["image_sha256"]] == 1]
+            splits[split] = sample_split(unique, sample_sizes[split], seed)
+        print(f"Excluded {duplicate_images} source images with byte-identical copies before sampling.")
     for split, records in splits.items():
         counts = Counter(
             names[class_id] for record in records
@@ -124,7 +151,8 @@ def prepare(root, output, *, name, dataset_version, license_name, source, names,
         "root": os.path.relpath(root, output.parent.resolve()),
         "name": name, "version": dataset_version, "license": license_name, "source": source,
         "names": names, "layout": layout, "seed": seed,
-        "ratios": ratios if layout == "unsplit" else None, "splits": splits,
+        "ratios": ratios if layout == "unsplit" else None, "source_sizes": source_sizes,
+        "excluded_duplicate_images": duplicate_images, "splits": splits,
     })
 
 
@@ -165,7 +193,7 @@ def custom_ground_truth(manifest, split):
         path = root / record["image"]
         paths[image_id] = path
         with Image.open(path) as image:
-            width, height = image.size
+            width, height = ImageOps.exif_transpose(image).size
         images.append({"id": image_id, "file_name": record["image"], "width": width, "height": height})
         for class_id, box in read_labels(root / record["label"], len(names)):
             xyxy = clip_xyxy(normalized_cxcywh_to_xyxy(box, width, height), width, height)
@@ -176,7 +204,7 @@ def custom_ground_truth(manifest, split):
             })
     ground_truth = COCO()
     ground_truth.dataset = {
-        "images": images, "annotations": annotations,
+        "info": {}, "images": images, "annotations": annotations,
         "categories": [{"id": index, "name": name} for index, name in enumerate(names, start=1)],
     }
     ground_truth.createIndex()

@@ -1,5 +1,6 @@
 import argparse
 import json
+from importlib.metadata import version
 from dataclasses import asdict
 from pathlib import Path
 
@@ -36,7 +37,7 @@ def main():
         "weights": detector.weights.name,
         "weights_sha256": sha256(detector.weights),
         "ultralytics": detector.model.ckpt.get("version"),
-        "installed_ultralytics": __import__("ultralytics").__version__,
+        "installed_ultralytics": version("ultralytics"),
         "config": config,
         "image_size": {"width": image.shape[1], "height": image.shape[0]},
         "counts": class_counts(detections),
