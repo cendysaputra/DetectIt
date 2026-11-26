@@ -1,0 +1,23 @@
+model: YOLO11n
+weights: data/checkpoints/yolo11n.pt
+imgsz: 640
+confidence: 0.25
+nms_iou: 0.70
+matching_iou: 0.50
+seed: 42
+dataset:
+  manifest: data/helmets/splits.json
+  ratios: [0.70, 0.15, 0.15]
+training:
+  epochs: 30
+  batch: 8
+  patience: 8
+  optimizer: AdamW
+  lr0: 0.001
+  freeze: 0
+  hsv_h: 0.015
+  hsv_s: 0.5
+  hsv_v: 0.3
+  fliplr: 0.5
+  mosaic: 0.5
+  close_mosaic: 5

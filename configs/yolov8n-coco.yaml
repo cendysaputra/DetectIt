@@ -1,0 +1,12 @@
+model: YOLOv8n
+weights: data/checkpoints/yolov8n.pt
+imgsz: 640
+confidence: 0.25
+nms_iou: 0.70
+matching_iou: 0.50
+seed: 42
+dataset:
+  name: COCO
+  version: "2017"
+  images: data/coco/images/val2017
+  annotations: data/coco/annotations/instances_val2017.json
